@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,17 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a > b) {
+    if (a > c) {
+      return a;
+    }
+    return c;
+  }
+  if (b > c) {
+    return b;
+  }
+  return c;
 }
 
 /**
@@ -60,8 +69,12 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  return (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(king.y - queen.y) === Math.abs(king.x - queen.x)
+  );
 }
 
 /**
@@ -82,8 +95,20 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (!a || !b || !c) {
+    return false;
+  }
+  if (a === b) {
+    return c <= a + b;
+  }
+  if (a === c) {
+    return b <= a + c;
+  }
+  if (b === c) {
+    return a <= b + c;
+  }
+  return false;
 }
 
 /**
@@ -100,8 +125,29 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const repeat = (length, symbol) => {
+    let str = '';
+    for (let i = 0; i < length; i += 1) {
+      str += symbol;
+    }
+    return str;
+  };
+  let strResult = '';
+  strResult += repeat(Math.floor(num / 10), 'X');
+  if (num % 10 > 8) {
+    strResult += 'IX';
+    return strResult;
+  }
+  if (num % 10 >= 5) {
+    strResult += 'V';
+  }
+  if (num % 5 > 3) {
+    strResult += 'IV';
+    return strResult;
+  }
+  strResult += repeat(num % 5, 'I');
+  return strResult;
 }
 
 /**
