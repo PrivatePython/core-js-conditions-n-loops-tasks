@@ -428,8 +428,67 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+
+function sortByAsc(arr) {
+  function pushElement(array, element) {
+    const resultArr = array;
+    if (array.length === 0) {
+      resultArr[0] = element;
+    } else {
+      resultArr[array.length] = element;
+    }
+  }
+
+  function mergeSortArr(firstArr, secondArr) {
+    const resultArr = [];
+    let pointerForFirstArr = 0;
+    let pointerForSecondArr = 0;
+    for (let i = pointerForFirstArr; i < firstArr.length; i += 1) {
+      pointerForFirstArr = i;
+      for (let j = pointerForSecondArr; j < secondArr.length; j += 1) {
+        if (firstArr[i] <= secondArr[j] && i !== firstArr.length - 1) {
+          pushElement(resultArr, firstArr[i]);
+          break;
+        }
+        if (
+          firstArr[i] <= secondArr[j] &&
+          pointerForFirstArr === firstArr.length - 1
+        ) {
+          pointerForFirstArr += 1;
+          pushElement(resultArr, firstArr[i]);
+        }
+        pushElement(resultArr, secondArr[j]);
+        pointerForSecondArr += 1;
+      }
+      if (
+        pointerForSecondArr === secondArr.length &&
+        pointerForFirstArr !== firstArr.length
+      ) {
+        pushElement(resultArr, firstArr[i]);
+      }
+    }
+    return resultArr;
+  }
+
+  if (arr.length < 2) {
+    return [arr[0]];
+  }
+  const leftArr = [];
+  const rightArr = [];
+  for (let l = 0; l < Math.ceil(arr.length / 2); l += 1) {
+    pushElement(leftArr, arr[l]);
+  }
+  for (let r = Math.ceil(arr.length / 2); r < arr.length; r += 1) {
+    pushElement(rightArr, arr[r]);
+  }
+  const leftHalf = sortByAsc(leftArr);
+  const rightHalf = sortByAsc(rightArr);
+  const arrResultAfterMerge = arr;
+  const arrResultMerge = mergeSortArr(leftHalf, rightHalf);
+  for (let index = 0; index < arrResultAfterMerge.length; index += 1) {
+    arrResultAfterMerge[index] = arrResultMerge[index];
+  }
+  return arrResultAfterMerge;
 }
 
 /**
