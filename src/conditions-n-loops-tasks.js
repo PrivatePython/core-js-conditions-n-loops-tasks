@@ -524,6 +524,14 @@ function shuffleChar(str, iterations) {
   let stringForShuffle = str;
   for (let counter = 1; counter <= iterations; counter += 1) {
     stringForShuffle = shuffle(stringForShuffle);
+    if (str === stringForShuffle) {
+      if (iterations % counter === 0) {
+        break;
+      }
+      if (Math.floor(iterations / counter) !== 1) {
+        counter += (Math.floor(iterations / counter) - 1) * counter;
+      }
+    }
   }
   return stringForShuffle;
 }
